@@ -1,15 +1,12 @@
-import { Button } from "@/components/ui/button";
-import React from "react";
+"use client";
 
-const HomePage = () => {
-  return (
-    <div>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad sequi
-      molestiae, deserunt nemo, facere aliquid excepturi, ipsam aperiam
-      consectetur explicabo fugiat maiores exercitationem voluptas labore modi
-      veritatis possimus officiis libero. <Button children="click me" />
-    </div>
-  );
+import InitialPage from "@/components/root/InitialPage";
+import WelcomePage from "@/components/root/WelcomePage";
+
+const Home = () => {
+  let auth = true;
+
+  return <div>{auth ? <InitialPage /> : <WelcomePage />}</div>;
 };
 
-export default HomePage;
+export default Home;
