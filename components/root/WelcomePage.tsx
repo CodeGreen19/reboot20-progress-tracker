@@ -2,12 +2,8 @@
 import Link from "next/link";
 import Logo from "../shared/Logo";
 import { Button } from "../ui/button";
-import cookies from "js-cookie";
 
 const WelcomePage = () => {
-  const cookie = cookies.get("user_token");
-  console.log(cookie);
-
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       <Logo />

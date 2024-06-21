@@ -3,23 +3,25 @@
 import SubmitButton from "@/components/auth/SubmitButton";
 import Logo from "@/components/shared/Logo";
 import { clientSideErrorShow, clientSideMessageShow } from "@/components/data";
-import { resetPassword } from "@/lib/actions/user.action";
+import { resetPassword } from "@/server/actions/user.action";
 import { useMutation } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 const ResetPassword = () => {
   const params = useSearchParams();
   let token = params.get("token");
+  const router = useRouter();
 
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: resetPassword,
     onSuccess: ({ error, message }) => {
       clientSideErrorShow(error);
       if (message) clientSideMessageShow(message);
+      if (message) router.push("/sign-in");
     },
   });
 
@@ -57,7 +59,7 @@ const ResetPassword = () => {
 
         <SubmitButton
           formtype="Confirm"
-          isPending={false}
+          isPending={isPending}
           pendingText="Updating..."
         />
       </form>

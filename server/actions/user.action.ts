@@ -94,7 +94,7 @@ export const getUser = async () => {
 
   return user;
 };
-export const authUser = () => {
+export const authUser = async () => {
   let token = cookies().get("user_token")?.value;
 
   if (!token) return false;

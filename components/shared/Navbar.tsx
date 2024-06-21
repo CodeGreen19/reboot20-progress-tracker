@@ -14,7 +14,7 @@ import { AUTH_ROUTE } from "@/routes";
 const Navbar = () => {
   const pathname = usePathname();
   let icons = [
-    { icon: <RiHome5Line />, url: "/home" },
+    { icon: <RiHome5Line />, url: "/" },
     { icon: <BsBarChartFill />, url: "/charts" },
     { icon: <IoIosAddCircleOutline className="text-[1.5rem]" />, url: "/add" },
     {
