@@ -1,6 +1,18 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
+
+const identity = <T,>(arg: T): T => {
+  return arg;
+};
+function echo<T>(arg: T): T {
+  return arg;
+}
 
 const AnalyticsPage = () => {
+  const data = identity("sdlfas");
+  const e = echo("sdlfas");
+
   return (
     <div>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta ratione eum

@@ -24,7 +24,7 @@ const Navbar = () => {
   ];
 
   return (
-    <Fragment>
+    <div>
       {AUTH_ROUTE.includes(pathname) ? (
         <SwitchForm pathname={pathname} />
       ) : (
@@ -36,7 +36,7 @@ const Navbar = () => {
           ))}
         </ul>
       )}
-    </Fragment>
+    </div>
   );
 };
 
