@@ -35,7 +35,7 @@ const HomePage = () => {
             <Link href={"/add"}>
               <Button className="bg-blue-700">create one</Button>
             </Link>
-            <div>{"you haven't created any goal yet !"} </div>
+            <div className="mt-5">{"you haven't created any goal yet !"} </div>
           </>
         )}
       </div>

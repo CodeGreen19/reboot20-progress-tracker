@@ -22,12 +22,25 @@ const AnalyticsPage = () => {
       ) : (
         <Fragment>
           <div className="w-full p-3">
-            <ShowOverallResult data={data?.goals?.goals!} />
+            {data?.goals?.goals.length! < 0 ? (
+              <ShowOverallResult data={data?.goals?.goals!} />
+            ) : (
+              <div className="mt-6 flex flex-col items-center justify-center gap-3">
+                <h1>{"you haven'nt created any goal yet!"}</h1>
+                <Link href={"/add"}>
+                  <Button className="bg-yellow-500 text-black">
+                    Create One
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
           <div className="mt-3 text-center">
-            <h1 className="text-sm text-[#8e8e8e] underline">
-              View Single Goal Analytics
-            </h1>
+            {data?.goals?.goals.length! > 0 && (
+              <h1 className="text-sm text-[#8e8e8e] underline">
+                View Single Goal Analytics
+              </h1>
+            )}
 
             <ul className="m-auto mb-24 mt-4 w-5/6">
               {data?.goals?.goals.map((goal) => {
