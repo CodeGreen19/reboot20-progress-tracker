@@ -11,8 +11,41 @@ datasource db {
 
 model User {
   id        String   @id @default(cuid())
-  name      String?
-  email     String?  @unique
-  password  String?
+  name      String
+  email     String   @unique
+  password  String
   createdAt DateTime @default(now())
+  goals     Goal[]
+}
+
+enum Status {
+  ongoing
+  completed
+}
+
+model Goal {
+  id       String   @id @default(cuid())
+  goal     String
+  fromDate DateTime
+  toDate   DateTime
+  tasks    Tasks[]
+  status   Status
+  authorId String
+  author   User     @relation(fields: [authorId], references: [id])
+}
+
+model Tasks {
+  id       String    @id @default(cuid())
+  date     DateTime
+  dayTasks DayTask[]
+  goalId   String
+  goal     Goal      @relation(fields: [goalId], references: [id])
+}
+
+model DayTask {
+  id     String  @id @default(cuid())
+  title  String
+  isDone Boolean
+  TaskId String
+  tasks  Tasks   @relation(fields: [TaskId], references: [id])
 }

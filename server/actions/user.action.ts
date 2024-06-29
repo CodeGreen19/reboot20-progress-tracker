@@ -94,6 +94,17 @@ export const getUser = async () => {
 
   return user;
 };
+
+export const getUserId = async () => {
+  let token = cookies().get("user_token")?.value;
+
+  if (!token) {
+    return { error: "token does'nt exist" };
+  }
+  let decode = jwtDecode(token);
+
+  return { id: decode.id };
+};
 export const authUser = async () => {
   let token = cookies().get("user_token")?.value;
 
@@ -127,8 +138,6 @@ export const resetPassword = async ({
     }
 
     let hashed = await hashedPassword(newPass);
-
-    console.log(id, hashed);
 
     await db.user.update({ where: { id }, data: { password: hashed } });
 

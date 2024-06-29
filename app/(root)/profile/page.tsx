@@ -1,9 +1,9 @@
 "use client";
+import Skeleton from "@/components/shared/Skeleton";
 import { Button } from "@/components/ui/button";
 import { getUser, logoutUser } from "@/server/actions/user.action";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React from "react";
 
 let userInfo = async () => {
   let user = await getUser();
@@ -16,23 +16,18 @@ const ProfilePage = () => {
     queryKey: ["user"],
     queryFn: userInfo,
   });
-  console.log(data);
 
   return (
-    <div className="w-full">
-      {isPending && (
-        <div className="flex_center mt-5 w-full animate-pulse text-white">
-          loading...
-        </div>
-      )}
+    <div className="w-full p-4">
+      {isPending && <Skeleton count={2} />}
       {!isPending && data && "id" in data && (
-        <ul className="mx-3 mt-10 rounded-md bg-[#1a1a1a] p-3 shadow-lg">
+        <ul className="mx-3 rounded-xl bg-[#161616] p-3 shadow-sm">
           <li className="my-2 grid grid-cols-2">
-            <span>name</span>
+            <span>Full Name</span>
             <span>{data.name}</span>
           </li>
           <li className="my-2 grid grid-cols-2">
-            <span>email</span>
+            <span>Email Address</span>
             <span>
               {data.email?.length! > 15
                 ? ` ${data.email?.slice(0, 15)}....`
@@ -40,13 +35,13 @@ const ProfilePage = () => {
             </span>
           </li>
           <li className="my-2 grid grid-cols-2">
-            <span>member</span>
+            <span>Member Since</span>
             <span>{new Date(data.createdAt).toUTCString().slice(0, 11)}</span>
           </li>
           <li className="my-2 grid grid-cols-2">
-            <span>.....</span>
+            <span></span>
             <Button
-              className="mr-5 bg-red-600 text-white"
+              className="mr-5 bg-black text-red-600"
               onClick={() => {
                 logoutUser();
                 router.push("/");

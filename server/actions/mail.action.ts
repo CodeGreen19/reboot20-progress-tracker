@@ -13,5 +13,5 @@ export const SendMailToUser = async (email: string) => {
   let token = genToken(id);
 
   await sendEmail(token, email);
-  return { message: "email successfully sent" };
+  return { message: "Email has been sent" };
 };

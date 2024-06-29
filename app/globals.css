@@ -78,4 +78,8 @@
   .auth_input {
     @apply mb-4 w-full rounded-lg border-b border-b-[black] bg-[#1d1d1d] px-4 py-4 text-sm text-white placeholder-gray-400 outline-none;
   }
+
+  .bottom_nav {
+    @apply fixed bottom-0 flex h-16 w-full max-w-xl items-center justify-around rounded-tl-3xl rounded-tr-3xl border-t bg-nav;
+  }
 }
