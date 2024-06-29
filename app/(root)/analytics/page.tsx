@@ -22,11 +22,11 @@ const AnalyticsPage = () => {
       ) : (
         <Fragment>
           <div className="w-full p-3">
-            {data?.goals?.goals.length! < 0 ? (
+            {data?.goals?.goals.length! > 0 ? (
               <ShowOverallResult data={data?.goals?.goals!} />
             ) : (
               <div className="mt-6 flex flex-col items-center justify-center gap-3">
-                <h1>{"you haven'nt created any goal yet!"}</h1>
+                <h1>{"you haven't created any goal yet!"}</h1>
                 <Link href={"/add"}>
                   <Button className="bg-yellow-500 text-black">
                     Create One
@@ -36,7 +36,8 @@ const AnalyticsPage = () => {
             )}
           </div>
           <div className="mt-3 text-center">
-            {data?.goals?.goals.length! > 0 && (
+            {data?.goals?.goals.filter((data) => data.status === "completed")
+              .length! > 0 && (
               <h1 className="text-sm text-[#8e8e8e] underline">
                 View Single Goal Analytics
               </h1>
