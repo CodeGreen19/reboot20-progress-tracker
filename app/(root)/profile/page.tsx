@@ -18,10 +18,10 @@ const ProfilePage = () => {
   });
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full rounded-xl text-sm">
       {isPending && <Skeleton count={2} />}
       {!isPending && data && "id" in data && (
-        <ul className="mx-3 rounded-xl bg-[#161616] p-3 shadow-sm">
+        <ul className="mx-2 mt-2 rounded-xl border bg-[#161616] p-2 shadow-sm">
           <li className="my-2 grid grid-cols-2">
             <span>Full Name</span>
             <span>{data.name}</span>

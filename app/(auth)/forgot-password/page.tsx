@@ -51,7 +51,7 @@ const ForgotPassword = () => {
       ) : (
         <div className="text-center text-white">
           A mail has been sent to {email}, so go to your mail box and click the
-          <span className="text-center text-blue-400 text-border shadow-lg">
+          <span className="mx-2 text-center !text-blue-400 text-border shadow-lg">
             Reset password
           </span>{" "}
           button and reset your password, thank you!

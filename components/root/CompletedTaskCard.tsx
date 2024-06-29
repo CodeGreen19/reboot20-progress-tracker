@@ -33,11 +33,14 @@ const CompletedTaskCard = ({ goal }: { goal: GoalType }) => {
 
   return (
     <div className="relative w-full rounded-xl border bg-[#181818] p-3">
-      <div className="absolute right-7 top-4">
-        <DeleteAction goalId={id!}>
-          <HiDotsVertical />
-        </DeleteAction>
-      </div>
+      {status === "ongoing" && (
+        <div className="absolute right-7 top-4">
+          <DeleteAction goalId={id!}>
+            <HiDotsVertical />
+          </DeleteAction>
+        </div>
+      )}
+
       <div>
         <h2>
           Goal :{" "}

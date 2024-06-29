@@ -33,7 +33,7 @@ Reboot 20 Team
       <p>We received a request to reset your password for your Reboot 20 account.</p>
       <p>Click the link below to reset your password:</p>
       <p>
-        <a href="http://localhost:3000/reset-password?token=${resetToken}" 
+        <a href="${process.env.BASE_URL}/reset-password?token=${resetToken}" 
            style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
           Reset Password
         </a>
