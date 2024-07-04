@@ -46,22 +46,22 @@ const TaskPage = ({ params }: { params: { id: string } }) => {
     });
     setExistDayTask(existTask);
   };
-
-  useEffect(() => {
-    if (data?.singleGoal) {
-      let newCompleted = newSave(
-        data?.singleGoal?.tasks[taskCount].dayTasks!,
-        existDayTask,
-      );
-      setNewDone(newCompleted);
-    }
-  }, [data?.singleGoal, existDayTask, taskCount]);
-
   useEffect(() => {
     if (data?.singleGoal) {
       setExistDayTask(data.singleGoal.tasks[taskCount].dayTasks);
     }
   }, [data?.singleGoal, taskCount]);
+
+  useEffect(() => {
+    if (data?.singleGoal && existDayTask.length > 0) {
+      let newCompleted = newSave(
+        data?.singleGoal?.tasks[taskCount].dayTasks!,
+        existDayTask,
+        taskCount,
+      );
+      setNewDone(newCompleted);
+    }
+  }, [data?.singleGoal, existDayTask, taskCount]);
 
   return (
     <Fragment>

@@ -26,12 +26,14 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "m-auto max-w-xl bg-main font-sand text-stone-100 antialiased",
+          "m-auto w-full bg-main font-sand text-stone-100 antialiased",
           fontSand.variable,
         )}
       >
-        <ReactQuery>{children}</ReactQuery>
-        <Toaster />
+        <div className="m-auto max-w-xl">
+          <ReactQuery>{children}</ReactQuery>
+          <Toaster />
+        </div>
       </body>
     </html>
   );

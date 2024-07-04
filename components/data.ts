@@ -53,19 +53,24 @@ export const addDays = (date: Date, days: number): Date => {
 export const newSave = (
   existDayTask: DayTaskType[],
   newDayTask: DayTaskType[],
+  taskCount: number,
 ): { unsaveChange: number; saveChange: number } => {
   let unsaveChange = 0;
   let saveChange = 0;
 
-  for (let i = 0; i < existDayTask.length; i++) {
-    if (
-      newDayTask.length > 0 &&
-      existDayTask[i].isDone !== newDayTask[i].isDone
-    ) {
-      if (newDayTask[i].isDone) {
-        unsaveChange++;
-      } else {
-        saveChange++;
+  if (newDayTask.length > 0 && existDayTask) {
+    for (let i = 0; i < existDayTask.length; i++) {
+      if (
+        newDayTask.length > 0 &&
+        existDayTask.length > 0 &&
+        newDayTask[i].isDone &&
+        existDayTask[i].isDone !== newDayTask[i].isDone
+      ) {
+        if (newDayTask[i].isDone) {
+          unsaveChange++;
+        } else {
+          saveChange++;
+        }
       }
     }
   }

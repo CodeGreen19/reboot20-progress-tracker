@@ -22,7 +22,10 @@ export const timeLeft = (targetDate: Date): string => {
 };
 export const isGoalDateOver = (targetDate: Date): boolean => {
   const now = new Date();
-  return now >= targetDate;
+  const dayAfterTargetDate = new Date(targetDate);
+  dayAfterTargetDate.setDate(dayAfterTargetDate.getDate() + 1);
+
+  return now >= dayAfterTargetDate;
 };
 export const isToDateAboveFromNow = (fromDate: Date): boolean => {
   const now = new Date();
@@ -42,10 +45,21 @@ export const overallSuccessOfGoal = (goal: GoalType): number => {
 export const ShowMoreSuccessfullTask = (
   goal: GoalType,
 ): (number | undefined)[] | undefined => {
-  let data = goal.tasks?.map(
-    (info) => info.dayTasks?.filter((item) => item.isDone === true).length,
-  );
-  return data;
+  let filteredDate: { data: number[] }[] = [];
+  goal.tasks?.forEach((info, i) => {
+    let mapped = info.dayTasks?.map((item) => (item.isDone ? 1 : 0))!;
+    filteredDate.push({ data: mapped });
+  });
+  const summedData = filteredDate.reduce<number[]>((acc, item) => {
+    item.data.forEach((num, idx) => {
+      acc[idx] = (acc[idx] || 0) + num;
+    });
+    return acc;
+  }, []);
+
+  console.log(summedData);
+
+  return summedData;
 };
 
 export const AvarageGoalLength = (goal: GoalType[]) => {

@@ -9,6 +9,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ShowPieChart = ({ data }: { data: GoalType }) => {
   let pieLabels = data.tasks![0].dayTasks?.map((task) => task.title);
+
   const doughnutData = {
     labels: pieLabels,
     datasets: [
