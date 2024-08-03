@@ -9,7 +9,7 @@ import {
   clientSideMessageShow,
   dateDifference,
 } from "../data";
-import { isGoalDateOver } from "../statistics";
+import { isGoalDateOver, overallSuccessOfGoal } from "../statistics";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateStatusFromGoal } from "@/server/actions/goal.action";
 
@@ -29,7 +29,11 @@ const CompletedTaskCard = ({ goal }: { goal: GoalType }) => {
       queryClient.invalidateQueries();
     },
   });
-  let success = 90;
+  if (isPending) {
+    return <div>loading...</div>;
+  }
+  console.log(goal);
+  let success = overallSuccessOfGoal(goal);
 
   return (
     <div className="relative w-full rounded-xl border bg-[#181818] p-3">

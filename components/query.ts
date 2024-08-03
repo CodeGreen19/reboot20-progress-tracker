@@ -11,8 +11,8 @@ export const loggedinUser = async () => {
 /// for goal query
 
 export const AllGoals = async () => {
-  let goals = await getGoalsBasedOnUser();
-  return goals;
+  let users = await getGoalsBasedOnUser();
+  return users;
 };
 
 export const AllGoalsWithOtherInfo = async () => {

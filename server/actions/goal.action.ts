@@ -65,7 +65,7 @@ export const getGoalsBasedOnUser = async () => {
     const users = await db.user.findUnique({
       where: { id: userInfo.id },
       include: {
-        goals: true,
+        goals: { include: { tasks: { include: { dayTasks: true } } } },
       },
     });
     return { users };

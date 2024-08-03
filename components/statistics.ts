@@ -35,6 +35,7 @@ export const isToDateAboveFromNow = (fromDate: Date): boolean => {
 export const overallSuccessOfGoal = (goal: GoalType): number => {
   let success: number = 0;
   let length: number = 0;
+
   for (let i = 0; i < goal.tasks!.length; i++) {
     success += ShowProgressInPercent(goal.tasks![i].dayTasks!);
     length++;
