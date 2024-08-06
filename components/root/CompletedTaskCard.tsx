@@ -32,7 +32,7 @@ const CompletedTaskCard = ({ goal }: { goal: GoalType }) => {
   if (isPending) {
     return <div>loading...</div>;
   }
-  console.log(goal);
+
   let success = overallSuccessOfGoal(goal);
 
   return (

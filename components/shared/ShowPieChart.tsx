@@ -1,45 +1,26 @@
 // components/ChartComponent.tsx
 import React from "react";
-import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { GoalType } from "@/server/schema";
-import { ShowMoreSuccessfullTask } from "../statistics";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+import { GoalType } from "@/server/schema";
+import { TaskWithCompletedPercent } from "../statistics";
 
 const ShowPieChart = ({ data }: { data: GoalType }) => {
-  let pieLabels = data.tasks![0].dayTasks?.map((task) => task.title);
-
-  const doughnutData = {
-    labels: pieLabels,
-    datasets: [
-      {
-        label: "Achieved",
-        data: ShowMoreSuccessfullTask(data),
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+  let info = TaskWithCompletedPercent(data);
 
   return (
     <div className="w-full">
-      <Doughnut data={doughnutData} />
+      <ul className="p-6">
+        {info.map((text, i) => (
+          <li
+            className={`my-3 flex items-center justify-between text-sm ${text.num < 50 ? "text-red-600" : text.num < 90 ? "text-amber-500" : "text-green-500"}`}
+          >
+            <h1 className="pr-3">
+              {i + 1}. {text.text}
+            </h1>
+            <span>{text.num}%</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

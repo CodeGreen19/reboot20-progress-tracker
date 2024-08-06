@@ -58,8 +58,6 @@ export const ShowMoreSuccessfullTask = (
     return acc;
   }, []);
 
-  console.log(summedData);
-
   return summedData;
 };
 
@@ -89,4 +87,44 @@ export const AverageSuccessOfAllGoal = (goal: GoalType[]) => {
   });
 
   return Math.floor(sum / data.length);
+};
+
+type Task = {
+  text: string;
+  num: number;
+};
+export const TaskWithCompletedPercent = (data: GoalType): Task[] => {
+  let combinedArray = data.tasks?.map((item) => {
+    let arr: Task[] | undefined = item.dayTasks?.map((d) => {
+      return { text: d.title, num: d.isDone ? 1 : 0 };
+    });
+
+    return arr;
+  });
+  // Ensure type safety by filtering and flattening the array
+  const filteredArray: Task[] = (combinedArray || [])
+    .filter((arr): arr is Task[] => arr !== undefined)
+    .flat();
+
+  // Calculate the length of combined arrays
+  const combinedLength = combinedArray?.length || 1; // Use 1 to avoid division by zero
+
+  // Create a map to group by text and sum the num properties
+  const mergedMap: { [key: string]: Task } = filteredArray.reduce(
+    (acc, item) => {
+      if (!acc[item.text]) {
+        acc[item.text] = { text: item.text, num: 0 };
+      }
+      acc[item.text].num += item.num;
+      return acc;
+    },
+    {} as { [key: string]: Task },
+  );
+
+  // Convert the map back to an array and calculate percentages
+  const mergedArray: Task[] = Object.values(mergedMap).map((item) => ({
+    text: item.text,
+    num: Math.round((item.num / combinedLength) * 100),
+  }));
+  return mergedArray;
 };
