@@ -12,6 +12,7 @@ const ShowPieChart = ({ data }: { data: GoalType }) => {
       <ul className="p-6">
         {info.map((text, i) => (
           <li
+            key={i}
             className={`my-3 flex items-center justify-between text-sm ${text.num < 50 ? "text-red-600" : text.num < 90 ? "text-amber-500" : "text-green-500"}`}
           >
             <h1 className="pr-3">
