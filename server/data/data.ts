@@ -39,7 +39,10 @@ export const comparePassword = (
 
 export const getUserById = async (id: string) => {
   try {
-    let user = await db.user.findUnique({ where: { id } });
+    let user = await db.user.findUnique({
+      where: { id },
+      include: { commitments: true },
+    });
     return user;
   } catch (error) {
     return { error: "user does'nt found" };

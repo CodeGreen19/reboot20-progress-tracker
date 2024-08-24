@@ -10,12 +10,22 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  goals     Goal[]
+  id          String       @id @default(cuid())
+  name        String
+  email       String       @unique
+  password    String
+  createdAt   DateTime     @default(now())
+  goals       Goal[]
+  commitments Commitment[]
+}
+
+model Commitment {
+  id          String   @id @default(cuid())
+  text        String
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
 }
 
 enum Status {

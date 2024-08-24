@@ -1,9 +1,11 @@
 "use client";
+import CommitMents from "@/components/commits/CommitMents";
 import Skeleton from "@/components/shared/Skeleton";
 import { Button } from "@/components/ui/button";
 import { getUser, logoutUser } from "@/server/actions/user.action";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 let userInfo = async () => {
   let user = await getUser();
@@ -12,6 +14,7 @@ let userInfo = async () => {
 
 const ProfilePage = () => {
   const router = useRouter();
+
   const { data, isPending } = useQuery({
     queryKey: ["user"],
     queryFn: userInfo,
@@ -21,37 +24,65 @@ const ProfilePage = () => {
     <div className="w-full rounded-xl text-sm">
       {isPending && <Skeleton count={2} />}
       {!isPending && data && "id" in data && (
-        <ul className="mx-2 mt-2 rounded-xl border bg-[#161616] p-2 shadow-sm">
-          <li className="my-2 grid grid-cols-2">
-            <span>Full Name</span>
-            <span>{data.name}</span>
-          </li>
-          <li className="my-2 grid grid-cols-2">
-            <span>Email Address</span>
-            <span>
-              {data.email?.length! > 15
-                ? ` ${data.email?.slice(0, 15)}....`
-                : data.email}
-            </span>
-          </li>
-          <li className="my-2 grid grid-cols-2">
-            <span>Member Since</span>
-            <span>{new Date(data.createdAt).toUTCString().slice(0, 11)}</span>
-          </li>
-          <li className="my-2 grid grid-cols-2">
-            <span></span>
-            <Button
-              className="mr-5 bg-black text-red-600"
-              onClick={() => {
-                logoutUser();
-                router.push("/");
-                router.refresh();
-              }}
-            >
-              Logout
-            </Button>
-          </li>
-        </ul>
+        <div>
+          <ul className="mx-2 mt-2 rounded-xl border bg-[#161616] p-2 shadow-sm">
+            <li className="my-2 grid grid-cols-2">
+              <span>Full Name</span>
+              <span>{data.name}</span>
+            </li>
+            <li className="my-2 grid grid-cols-2">
+              <span>Email Address</span>
+              <span>
+                {data.email?.length! > 15
+                  ? ` ${data.email?.slice(0, 15)}....`
+                  : data.email}
+              </span>
+            </li>
+            <li className="my-2 grid grid-cols-2">
+              <span>Member Since</span>
+              <span>{new Date(data.createdAt).toUTCString().slice(0, 11)}</span>
+            </li>
+            <li className="my-2 grid grid-cols-2">
+              <span></span>
+              <Button
+                className="mr-5 bg-black text-red-600"
+                onClick={() => {
+                  logoutUser();
+                  router.push("/");
+                  router.refresh();
+                }}
+              >
+                Logout
+              </Button>
+            </li>
+          </ul>
+          <div className="mb-20">
+            <div className="my-4 flex">
+              <div
+                className="w-full cursor-pointer text-center text-blue-500 underline"
+                onClick={() => router.push(`/profile/create-commit/${data.id}`)}
+              >
+                create new commitment
+              </div>
+            </div>
+            {data.commitments.length === 0 ? (
+              <div className="mt-11 w-full text-center">
+                no commitment created yet !
+              </div>
+            ) : (
+              data.commitments.map((item) => (
+                <div key={item.id} className="px-3">
+                  <CommitMents
+                    date={item.createdAt}
+                    text={item.text}
+                    isDone={item.isCompleted}
+                    commitId={item.id}
+                  />
+                </div>
+              ))
+            )}
+          </div>
+        </div>
       )}
     </div>
   );
