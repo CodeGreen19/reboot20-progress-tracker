@@ -25,14 +25,17 @@ const CrateCommit = ({ params }: { params: { id: string } }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (text.split(" ").length < 5) {
+      return clientSideErrorShow("commitement must be at least 6 words");
+    }
     mutate({ id: params.id!, text });
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="px-3">
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
-        className="mt-4 min-h-44 w-full rounded-lg bg-black p-4"
+        className="mt-4 min-h-44 w-full rounded-lg bg-stone-900 p-4 outline-none"
         placeholder="enter commitments here..."
       ></textarea>
       <div className="my-3 flex items-center justify-center">
