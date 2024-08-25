@@ -40,7 +40,7 @@ const CommitMents = ({
   };
   return (
     <div
-      className={`mt-2 rounded-lg p-3 shadow ${isDone ? "bg-gray-900" : "bg-stone-900"}`}
+      className={`mt-2 rounded-lg p-3 px-4 ${isDone ? "bg-gray-900" : "bg-stone-900"}`}
     >
       <h1
         className={`mb-2 font-bold ${isDone ? "text-gray-500" : "text-purple-600"}`}

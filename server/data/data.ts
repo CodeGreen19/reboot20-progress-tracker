@@ -48,3 +48,14 @@ export const getUserById = async (id: string) => {
     return { error: "user does'nt found" };
   }
 };
+
+export const getUserIdFromCookie = async () => {
+  let token = cookies().get("user_token")?.value;
+
+  if (!token) {
+    return { error: "token does'nt exist" };
+  }
+  let decode = jwtDecode(token);
+
+  return { id: decode.id };
+};

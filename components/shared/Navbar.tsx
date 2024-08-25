@@ -10,6 +10,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SwitchForm from "../auth/SwitchForm";
 import { AUTH_ROUTE } from "@/routes";
+import { PiNotePencilFill } from "react-icons/pi";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -17,6 +18,10 @@ const Navbar = () => {
     { icon: <RiHome5Line />, url: "/" },
     { icon: <BsBarChartFill />, url: "/analytics" },
     { icon: <IoIosAddCircleOutline className="text-[1.5rem]" />, url: "/add" },
+    {
+      icon: <PiNotePencilFill className="text-[1.5rem]" />,
+      url: "/diary",
+    },
     {
       icon: <MdOutlineAccountCircle className="text-[1.5rem]" />,
       url: "/profile",

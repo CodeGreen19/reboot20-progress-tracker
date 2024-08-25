@@ -25,27 +25,32 @@ const ProfilePage = () => {
       {isPending && <Skeleton count={2} />}
       {!isPending && data && "id" in data && (
         <div>
-          <ul className="mx-2 mt-2 rounded-xl border bg-[#161616] p-2 shadow-sm">
-            <li className="my-2 grid grid-cols-2">
+          <ul className="mx-3 mt-2 rounded-xl border bg-[#161616] p-2 shadow-sm">
+            <li className="my-2 grid grid-cols-[1.2fr_2fr]">
               <span>Full Name</span>
-              <span>{data.name}</span>
+              <span>: {data.name}</span>
             </li>
-            <li className="my-2 grid grid-cols-2">
+            <li className="my-2 grid grid-cols-[1.2fr_2fr]">
               <span>Email Address</span>
               <span>
-                {data.email?.length! > 15
-                  ? ` ${data.email?.slice(0, 15)}....`
+                {" "}
+                :
+                {data.email?.length! > 20
+                  ? ` ${data.email?.slice(0, 20)}....`
                   : data.email}
               </span>
             </li>
-            <li className="my-2 grid grid-cols-2">
+            <li className="my-2 grid grid-cols-[1.2fr_2fr]">
               <span>Member Since</span>
-              <span>{new Date(data.createdAt).toUTCString().slice(0, 11)}</span>
+              <span>
+                {" "}
+                : {new Date(data.createdAt).toUTCString().slice(0, 11)}
+              </span>
             </li>
-            <li className="my-2 grid grid-cols-2">
+            <li className="my-2 grid grid-cols-[1.2fr_2fr]">
               <span></span>
-              <Button
-                className="mr-5 bg-black text-red-600"
+              <div
+                className="mr-5 text-red-600"
                 onClick={() => {
                   logoutUser();
                   router.push("/");
@@ -53,7 +58,7 @@ const ProfilePage = () => {
                 }}
               >
                 Logout
-              </Button>
+              </div>
             </li>
           </ul>
           <div className="mb-20">

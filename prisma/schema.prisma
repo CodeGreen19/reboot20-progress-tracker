@@ -17,6 +17,7 @@ model User {
   createdAt   DateTime     @default(now())
   goals       Goal[]
   commitments Commitment[]
+  diary       Diary[]
 }
 
 model Commitment {
@@ -26,6 +27,15 @@ model Commitment {
   createdAt   DateTime @default(now())
   authorId    String
   author      User     @relation(fields: [authorId], references: [id])
+}
+
+// for my diary
+model Diary {
+  id        String   @id @default(cuid())
+  diaryText String[]
+  createdAt DateTime @default(now())
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
 }
 
 enum Status {
