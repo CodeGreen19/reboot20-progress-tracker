@@ -83,10 +83,13 @@ const CommitMents = ({
             <div className="my-2 text-gray-400">
               <p>
                 success :{" "}
-                <span className="text-green-500">"{successText}"</span>
+                <span className="text-green-500">
+                  &quot;{successText}&quot;
+                </span>
               </p>{" "}
               <p>
-                failed : <span className="text-red-700">"{failedText}"</span>
+                failed :{" "}
+                <span className="text-red-700">&quot;{failedText}&quot;</span>
               </p>
             </div>
             <form
