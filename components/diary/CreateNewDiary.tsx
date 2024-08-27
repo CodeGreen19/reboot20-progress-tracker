@@ -32,7 +32,7 @@ const CreateNewDiary = ({ children }: { children: React.ReactNode }) => {
     if (text.split(" ").length < 5) {
       return clientSideErrorShow("add at least 5 word");
     }
-    mutate(text);
+    mutate({ text });
   };
   return (
     <div>

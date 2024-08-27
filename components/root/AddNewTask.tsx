@@ -99,8 +99,8 @@ const AddNewTask: React.FC = () => {
 
   return (
     <Fragment>
-      <div className="mx-auto mt-2 p-4 text-center">
-        <h2 className="mb-3 text-2xl font-bold text-gray-300 underline">
+      <div className="mx-auto mt-2 rounded-xl bg-[#19191973] p-4 text-center">
+        <h2 className="mb-3 text-xl font-bold text-blue-600">
           Create new goal
         </h2>
         <div>

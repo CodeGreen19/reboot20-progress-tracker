@@ -62,9 +62,10 @@ const ProfilePage = () => {
             </li>
           </ul>
           <div className="mb-20">
-            <div className="my-4 flex">
+            <div className="my-4 flex w-full items-center justify-between px-6">
+              <div>Commitments({data.commitments.length})</div>
               <div
-                className="w-full cursor-pointer text-center text-blue-500 underline"
+                className="cursor-pointer text-center text-blue-500 underline"
                 onClick={() => router.push(`/profile/create-commit/${data.id}`)}
               >
                 create new commitment
@@ -80,7 +81,8 @@ const ProfilePage = () => {
                   <CommitMents
                     date={item.createdAt}
                     text={item.text}
-                    isDone={item.isCompleted}
+                    isCompleted={item.isCompleted}
+                    isFailed={item.isFailed}
                     commitId={item.id}
                   />
                 </div>

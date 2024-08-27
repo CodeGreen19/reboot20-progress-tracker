@@ -31,10 +31,28 @@ export const allCommitments = async ({ id }: { id: string }) => {
   }
 };
 
-export const completeCommit = async ({ id }: { id: string }) => {
+export const completeCommit = async ({
+  id,
+  done,
+  fail,
+}: {
+  id: string;
+  done: boolean;
+  fail: boolean;
+}) => {
   try {
-    await db.commitment.update({ where: { id }, data: { isCompleted: true } });
-
+    if (done) {
+      await db.commitment.update({
+        where: { id },
+        data: { isCompleted: true, isFailed: false },
+      });
+    }
+    if (fail) {
+      await db.commitment.update({
+        where: { id },
+        data: { isFailed: true, isCompleted: false },
+      });
+    }
     return { message: "completed" };
   } catch (error) {
     return { error: "error occurs" };

@@ -1,36 +1,44 @@
 "use server";
 
 import { db } from "@/lib/db/db";
-import { format } from "date-fns";
 import { getUserIdFromCookie } from "../data/data";
-
-export const createDiary = async (text: string) => {
+export const createDiary = async ({ text }: { text: string }) => {
   try {
     let { id } = await getUserIdFromCookie();
 
-    const today = format(new Date(), "yyyy-MM-dd");
+    // Adjusting the time range to match only the specific day
+    let today = new Date();
+    const startOfDay = new Date(today);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(today);
+    endOfDay.setHours(23, 59, 59, 999);
 
     let existingDiary = await db.diary.findFirst({
       where: {
         authorId: id,
         createdAt: {
-          gte: new Date(today),
+          gte: startOfDay,
+          lte: endOfDay,
         },
       },
     });
 
     if (existingDiary) {
-      await db.diary.update({
-        where: { id: existingDiary.id },
+      // Update the existing diary entry by adding the new text
+      await db.dayTexts.create({
         data: {
-          diaryText: [...existingDiary.diaryText, text],
+          text,
+          diaryId: existingDiary.id,
         },
       });
     } else {
+      // Create a new diary entry
       await db.diary.create({
         data: {
-          diaryText: [text],
           authorId: id!,
+          diaryText: {
+            create: [{ text }],
+          },
         },
       });
     }
@@ -41,6 +49,7 @@ export const createDiary = async (text: string) => {
     return { error: "Internal server error" };
   }
 };
+
 export const getUserDiaries = async () => {
   try {
     let { id } = await getUserIdFromCookie();

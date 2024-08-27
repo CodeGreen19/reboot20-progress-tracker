@@ -3,7 +3,7 @@ import React from "react";
 
 const AddNewTask = () => {
   return (
-    <div className="mb-28 w-full">
+    <div className="mb-28 w-full px-2">
       <AddnewTask />
     </div>
   );

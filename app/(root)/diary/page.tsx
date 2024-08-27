@@ -23,8 +23,8 @@ const DiaryPage = () => {
           <div className="rounded-xl bg-stone-900 p-3 text-sm text-slate-300">
             {data?.diaries?.map((item, i) => (
               <div key={i}>
-                <h1 className="my-3 font-bold text-sky-500">
-                  {format(item.createdAt, "PPPP")}
+                <h1 className="my-3 text-sm font-bold text-sky-500">
+                  {`${format(item.createdAt, "PPP")} (${format(item.createdAt, "ccc")})`}
                 </h1>
                 <ul>
                   {item.diaryText.map((item, i) => (
@@ -35,7 +35,12 @@ const DiaryPage = () => {
                       <span>
                         <FaCaretRight className="mt-1 text-purple-500" />
                       </span>{" "}
-                      <p>{item}</p>
+                      <p>
+                        <span className="mr-1 text-[0.8rem] text-slate-400">
+                          {`(${format(item.createdAt!, "p")})`}
+                        </span>
+                        <span className="text-slate-200"> {item.text}</span>
+                      </p>
                     </li>
                   ))}
                 </ul>
