@@ -30,7 +30,7 @@ const DeleteAction = ({
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-[#151515]">
+        <DropdownMenuContent className="space-y-2 bg-[#151515]">
           <DropdownMenuItem
             className="flex_center w-full cursor-pointer bg-red-500 text-white hover:bg-red-600"
             onClick={() => mutate(goalId)}

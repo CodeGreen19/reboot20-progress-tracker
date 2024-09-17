@@ -49,8 +49,8 @@ const AnalyticsPage = () => {
                   return (
                     <Link key={goal.id} href={`/analytics/${goal.id}`}>
                       <li className="m-auto my-1 flex items-center justify-between rounded-lg bg-[#101010] p-3">
-                        <span>
-                          Goal: <TextSmaller text={goal.goal} count={50} />
+                        <span className="truncate pr-3 text-sm">
+                          Goal: {goal.goal}
                         </span>
                         <Button className="bg-green-700">view</Button>
                       </li>

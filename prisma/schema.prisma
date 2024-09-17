@@ -18,6 +18,7 @@ model User {
   goals       Goal[]
   commitments Commitment[]
   diary       Diary[]
+  urine       Urine[]
 }
 
 model Commitment {
@@ -28,6 +29,15 @@ model Commitment {
   createdAt   DateTime @default(now())
   authorId    String
   author      User     @relation(fields: [authorId], references: [id])
+}
+
+// for urine
+model Urine {
+  id        String     @id @default(cuid())
+  times     DateTime[]
+  createdAt DateTime   @default(now())
+  authorId  String
+  author    User       @relation(fields: [authorId], references: [id])
 }
 
 // for my diary

@@ -46,11 +46,8 @@ const CompletedTaskCard = ({ goal }: { goal: GoalType }) => {
       )}
 
       <div>
-        <h2 className="mr-6">
-          Goal :{" "}
-          <span>
-            <TextSmaller text={title} count={50} />
-          </span>
+        <h2 className="mr-6 truncate">
+          Goal : <span className="">{title}</span>
         </h2>
         <h3 className="text-sm">
           Date :{" "}

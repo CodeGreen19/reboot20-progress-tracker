@@ -32,11 +32,11 @@ const ProfilePage = () => {
             </li>
             <li className="my-2 grid grid-cols-[1.2fr_2fr]">
               <span>Email Address</span>
-              <span>
+              <span className="truncate">
                 {" "}
                 :
                 {data.email?.length! > 20
-                  ? ` ${data.email?.slice(0, 20)}....`
+                  ? ` ${data.email.toString()}`
                   : data.email}
               </span>
             </li>
