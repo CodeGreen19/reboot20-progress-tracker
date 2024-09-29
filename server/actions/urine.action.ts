@@ -7,35 +7,44 @@ export const addUrine = async () => {
   try {
     let { id } = await getUserIdFromCookie();
     const today = new Date();
-    const startOfDay = new Date(today.setHours(0, 0, 0, 0));
-    const endOfDay = new Date(today.setHours(23, 59, 59, 999));
-    let urineRecord = await db.urine.findFirst({
-      where: {
-        authorId: id!,
-        createdAt: {
-          gte: startOfDay,
-          lte: endOfDay,
-        },
-      },
-    });
-    if (!urineRecord) {
+
+    let urineRecords = await db.urine.findMany({ where: { authorId: id } });
+
+    if (urineRecords.length === 0) {
       await db.urine.create({
         data: {
           authorId: id!,
-          times: [new Date()],
+          times: [today],
+        },
+      });
+
+      return { message: "updated" };
+    }
+    let lastRecords = urineRecords[urineRecords.length - 1];
+
+    console.log(lastRecords.createdAt.toDateString(), today.toDateString());
+
+    if (lastRecords.createdAt.toDateString() === today.toDateString()) {
+      await db.urine.update({
+        where: { id: urineRecords[0].id },
+        data: {
+          times: { push: today },
         },
       });
       return { message: "updated" };
     } else {
-      await db.urine.update({
-        where: { id: urineRecord.id },
+      await db.urine.create({
         data: {
-          times: { push: new Date() },
+          authorId: id!,
+          times: [today],
         },
       });
+
       return { message: "updated" };
     }
   } catch (error) {
+    console.log(error);
+
     return { error: "error occurs" };
   }
 };
