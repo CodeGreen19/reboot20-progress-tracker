@@ -39,8 +39,6 @@ const TasksCard = ({
     } else {
       clientSideErrorShow("The day hasn't come, try later");
     }
-
-    update(dayTaskId);
   };
 
   return (
