@@ -12,6 +12,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import FormatDate from "../shared/FormatDate";
+import { PopoverClose } from "@radix-ui/react-popover";
 
 interface DatePickerType {
   date: Date | undefined;
@@ -19,6 +20,13 @@ interface DatePickerType {
 }
 
 export function DatePicker({ date, setDate }: DatePickerType) {
+  const popoverCloseRef = React.useRef<HTMLButtonElement | null>(null);
+
+  const selectDateHandler = (e: Date | undefined) => {
+    if (e !== undefined) {
+      setDate(e), popoverCloseRef.current?.click();
+    }
+  };
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -30,15 +38,16 @@ export function DatePicker({ date, setDate }: DatePickerType) {
           {date ? FormatDate(date) : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
+      <PopoverContent className="w-auto rounded-lg bg-black p-0">
         <Calendar
-          className="bg-black text-white"
+          className="rounded-xl border-none text-white"
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={selectDateHandler}
           initialFocus
         />
       </PopoverContent>
+      <PopoverClose ref={popoverCloseRef} />
     </Popover>
   );
 }

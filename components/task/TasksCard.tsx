@@ -32,7 +32,6 @@ const TasksCard = ({
       date.toString().slice(0, 15) === selectedDate.toString().slice(0, 15)
         ? true
         : false;
-
     if (date > selectedDate && !currentDate) {
       clientSideErrorShow("Time's Up, you can't edit the task");
     } else if (currentDate) {
@@ -40,6 +39,8 @@ const TasksCard = ({
     } else {
       clientSideErrorShow("The day hasn't come, try later");
     }
+
+    update(dayTaskId);
   };
 
   return (
@@ -52,7 +53,7 @@ const TasksCard = ({
             key={task.id}
           >
             <span
-              className={`text-[12px] sm:text-[1rem] ${task.isDone && "text-gray-400"}`}
+              className={`text-[12px] sm:text-[1rem] ${task.isDone && "text-gray-500"}`}
             >
               {task.title}
             </span>

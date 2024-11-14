@@ -6,6 +6,7 @@ import { getUser, logoutUser } from "@/server/actions/user.action";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { FaArrowRight } from "react-icons/fa6";
 
 let userInfo = async () => {
   let user = await getUser();
@@ -65,10 +66,10 @@ const ProfilePage = () => {
             <div className="my-4 flex w-full items-center justify-between px-6">
               <div>Commitments({data.commitments.length})</div>
               <div
-                className="cursor-pointer text-center text-blue-500 underline"
+                className="flex cursor-pointer items-center gap-1 text-center text-blue-500"
                 onClick={() => router.push(`/profile/create-commit/${data.id}`)}
               >
-                create new commitment
+                create new commitment <FaArrowRight className="ml-2 text-xs" />
               </div>
             </div>
             {data.commitments.length === 0 ? (

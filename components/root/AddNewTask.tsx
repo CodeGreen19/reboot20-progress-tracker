@@ -99,8 +99,8 @@ const AddNewTask: React.FC = () => {
 
   return (
     <Fragment>
-      <div className="mx-auto mt-2 rounded-xl bg-[#19191973] p-4 text-center">
-        <h2 className="mb-3 text-xl font-bold text-blue-600">
+      <div className="mx-3 mt-2 rounded-xl bg-[#191919b7] p-4 text-center">
+        <h2 className="mb-3 ml-3 text-start text-base font-semibold text-white">
           Create new goal
         </h2>
         <div>
@@ -137,7 +137,7 @@ const AddNewTask: React.FC = () => {
               tasks.map((task) => (
                 <li
                   key={task.id}
-                  className="relative my-[2px] flex w-full items-center justify-start gap-2 rounded-md bg-[#181818] p-2 pr-8 text-start text-sm sm:text-[16px]"
+                  className="relative flex w-full items-center justify-start gap-2 rounded-md bg-[#181818] p-2 pr-8 text-start text-sm sm:text-[16px]"
                 >
                   <CiCircleList className="text-sm text-blue-600" />
                   {task.title}
@@ -148,9 +148,8 @@ const AddNewTask: React.FC = () => {
                 </li>
               ))
             ) : (
-              <li className="text-sm text-gray-300">
-                No task has been added yet ! add some tasks to create your goal
-                ...
+              <li className="ml-2 text-start text-xs text-yellow-400">
+                No task has been added yet !
               </li>
             )}
           </ul>

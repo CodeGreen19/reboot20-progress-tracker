@@ -80,7 +80,10 @@ export const getSingleGoal = async (id: string) => {
       where: {
         id,
       },
-      include: { tasks: { include: { dayTasks: true } } },
+
+      include: {
+        tasks: { include: { dayTasks: true }, orderBy: { id: "asc" } },
+      },
     });
     return { singleGoal };
   } catch (error) {

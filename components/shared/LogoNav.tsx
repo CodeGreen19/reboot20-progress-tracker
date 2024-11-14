@@ -12,11 +12,7 @@ const LogoNav = () => {
           <Image height={40} width={200} alt="logo" src={"/logo.png"} />
         </Link>
       </div>
-      <AddUrin>
-        <div className="cursor-pointer rounded-2xl">
-          <HiDotsVertical />
-        </div>
-      </AddUrin>
+      <div></div>
     </div>
   );
 };

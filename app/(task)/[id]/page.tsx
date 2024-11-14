@@ -71,7 +71,7 @@ const TaskPage = ({ params }: { params: { id: string } }) => {
         <div className="pb-24">
           <TaskInfo data={data?.singleGoal!} />
 
-          <h1 className="pt-3 text-center text-xl font-bold underline">
+          <h1 className="pt-3 text-center text-lg font-bold">
             My Tasks {`(${existDayTask.length})`}
           </h1>
           <TasksCard

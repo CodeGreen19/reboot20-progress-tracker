@@ -5,21 +5,34 @@ import Skeleton from "@/components/shared/Skeleton";
 import { getUserDiaries } from "@/server/actions/diary.action";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaCaretRight } from "react-icons/fa";
 
 const DiaryPage = () => {
+  const divRef = useRef<HTMLDivElement | null>(null);
+
+  // First query to get user diaries
   const { data, isPending } = useQuery({
     queryKey: ["diaries"],
-    queryFn: async () => await getUserDiaries(),
+    queryFn: async () => {
+      let data = await getUserDiaries();
+      return data;
+    },
   });
 
+  // Use useEffect to trigger the scroll once data has been loaded
+  useEffect(() => {
+    if (data && divRef.current) {
+      // Scroll to the bottom of the div
+      window.scrollTo(0, divRef.current.scrollHeight);
+    }
+  }, [data]); // Run this effect when data changes
   return (
     <Fragment>
       {isPending && <Skeleton count={3} />}
       {data && data?.diaries?.length !== 0 ? (
-        <div className="mb-14 p-3">
+        <div className="mb-14 p-3" ref={divRef}>
           <div className="rounded-xl bg-stone-900 p-3 text-sm text-slate-300">
             {data?.diaries?.map((item, i) => (
               <div key={i}>
@@ -47,10 +60,10 @@ const DiaryPage = () => {
               </div>
             ))}
           </div>
-          <div className="flex w-full items-center justify-center">
+          <div className="flex w-full items-center justify-end pb-3">
             <CreateNewDiary>
-              <div className="mt-4 flex items-center justify-center text-sm text-blue-500 underline hover:bg-transparent hover:text-blue-600">
-                add new in your diary <FaArrowRight className="ml-2" />
+              <div className="mt-4 flex items-center justify-center text-sm font-semibold text-blue-500 hover:bg-transparent hover:text-blue-600">
+                add new in your diary <FaArrowRight className="ml-2 text-xs" />
               </div>
             </CreateNewDiary>
           </div>

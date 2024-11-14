@@ -6,6 +6,7 @@ import Skeleton from "@/components/shared/Skeleton";
 import TextSmaller from "@/components/shared/TextSmaller";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
+import { Expand, Link2 } from "lucide-react";
 import Link from "next/link";
 import { Fragment } from "react";
 
@@ -38,21 +39,21 @@ const AnalyticsPage = () => {
           <div className="mt-3 text-center">
             {data?.goals?.goals.filter((data) => data.status === "completed")
               .length! > 0 && (
-              <h1 className="text-sm text-[#8e8e8e] underline">
+              <h1 className="text-sm font-semibold text-white">
                 View Single Goal Analytics
               </h1>
             )}
 
-            <ul className="m-auto mb-24 mt-4 w-5/6">
+            <ul className="m-auto mb-24 mt-4 w-10/12">
               {data?.goals?.goals.map((goal) => {
                 if (goal.status === "completed") {
                   return (
                     <Link key={goal.id} href={`/analytics/${goal.id}`}>
                       <li className="m-auto my-1 flex items-center justify-between rounded-lg bg-[#101010] p-3">
-                        <span className="truncate pr-3 text-sm">
+                        <span className="truncate pr-3 text-xs sm:text-sm">
                           Goal: {goal.goal}
                         </span>
-                        <Button className="bg-green-700">view</Button>
+                        <Link2 className="text-sm text-green-500" />
                       </li>
                     </Link>
                   );

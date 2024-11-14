@@ -23,7 +23,10 @@ export const createCommits = async ({
 };
 export const allCommitments = async ({ id }: { id: string }) => {
   try {
-    let allCommit = await db.commitment.findMany({ where: { authorId: id } });
+    let allCommit = await db.commitment.findMany({
+      where: { authorId: id },
+      orderBy: { id: "asc" },
+    });
 
     return { allCommit };
   } catch (error) {
