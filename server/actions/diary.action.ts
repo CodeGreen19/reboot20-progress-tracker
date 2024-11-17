@@ -8,9 +8,10 @@ export const createDiary = async ({
   imageUrl,
 }: {
   text: string;
-  imageUrl: string | null;
+  imageUrl?: string;
 }) => {
   try {
+    // getting id
     let { id } = await getUserIdFromCookie();
 
     // Adjusting the time range to match only the specific day
@@ -25,7 +26,7 @@ export const createDiary = async ({
     let public_id: string | null = null;
 
     if (imageUrl) {
-      const ImageUpload = await uploadImg({ readyImgData: imageUrl });
+      const ImageUpload = await uploadImg({ imgUrl: imageUrl });
       if (ImageUpload.secure_url) {
         secure_url = ImageUpload.secure_url;
         public_id = ImageUpload.public_id;
@@ -68,7 +69,7 @@ export const createDiary = async ({
 
     return { success: true };
   } catch (error) {
-    console.error(error);
+    console.log("server error", error);
     return { error: "Internal server error" };
   }
 };

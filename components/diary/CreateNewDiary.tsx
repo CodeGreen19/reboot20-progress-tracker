@@ -18,23 +18,25 @@ import { clientSideErrorShow } from "../data";
 import { Input } from "../ui/input";
 import Image from "next/image";
 import { Delete, Upload } from "lucide-react";
-import { uploadImg } from "@/server/data/upload_img";
 import CustomBtn from "../shared/CustomBtn";
 
 const CreateNewDiary = ({ children }: { children: React.ReactNode }) => {
   const [text, setText] = useState<string>("");
   // for images
   const [preview, setPreview] = useState<string | null>(null);
-  const [uploadReadyImg, setUploadReadyImg] = useState<string | null>(null);
+  const [uploadImgUrl, setUploadImgUrl] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["diary-update"],
     mutationFn: createDiary,
-    onSuccess: () => {
+    onSuccess: ({ error, success }) => {
+      if (error) {
+        return clientSideErrorShow(error);
+      }
       setText("");
       setPreview(null);
-      setUploadReadyImg(null);
+      setUploadImgUrl(null);
       queryClient.invalidateQueries({ queryKey: ["diaries"] });
     },
   });
@@ -44,7 +46,12 @@ const CreateNewDiary = ({ children }: { children: React.ReactNode }) => {
     if (text.split(" ").length < 5) {
       return clientSideErrorShow("add at least 5 word");
     }
-    mutate({ text, imageUrl: uploadReadyImg });
+
+    if (uploadImgUrl) {
+      mutate({ text, imageUrl: uploadImgUrl });
+    } else {
+      mutate({ text });
+    }
   };
 
   // handle file selection
@@ -53,10 +60,12 @@ const CreateNewDiary = ({ children }: { children: React.ReactNode }) => {
     if (file) {
       //for file
       const reader = new FileReader();
-      reader.onload = (e) => {
-        if (typeof e.target?.result === "string") {
-          setUploadReadyImg(e.target.result);
-          setPreview(URL.createObjectURL(file)); // Generate preview
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          if (typeof reader.result === "string") {
+            setUploadImgUrl(reader.result);
+            setPreview(URL.createObjectURL(file)); // Generate preview
+          }
         }
       };
       reader.readAsDataURL(file);
@@ -69,12 +78,14 @@ const CreateNewDiary = ({ children }: { children: React.ReactNode }) => {
         <DialogTrigger>{children}</DialogTrigger>
         <DialogContent className="max-h-[80vh] min-h-[500px] overflow-y-auto bg-stone-900">
           <DialogHeader>
-            <DialogTitle>{format(new Date(), "PPPP")}</DialogTitle>
+            <DialogTitle className="text-start text-sm">
+              {format(new Date(), "PPP")}
+            </DialogTitle>
             <DialogDescription>
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                className="mt-4 h-[250px] w-full resize-none rounded-md bg-[#212121] p-4 text-slate-200 outline-none"
+                className="mt-4 h-[200px] w-full resize-none rounded-md bg-[#212121] p-4 text-slate-200 outline-none"
                 placeholder="create new text.."
               ></textarea>
               {!preview && (
@@ -85,7 +96,7 @@ const CreateNewDiary = ({ children }: { children: React.ReactNode }) => {
                     className="absolute bottom-0 left-0 right-0 top-0 h-full w-full cursor-pointer opacity-0"
                   />
                   <div className="">Upload Image</div>{" "}
-                  <Upload className="text-xs" />
+                  <Upload className="cursor-pointer text-xs" />
                 </div>
               )}
               {preview && (
@@ -101,7 +112,7 @@ const CreateNewDiary = ({ children }: { children: React.ReactNode }) => {
                     className="absolute right-0 top-0 m-2 text-red-500"
                     onClick={() => {
                       setPreview(null);
-                      setUploadReadyImg(null);
+                      setUploadImgUrl(null);
                     }}
                   />
                 </div>

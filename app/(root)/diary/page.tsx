@@ -32,7 +32,7 @@ const DiaryPage = () => {
   }, [data]); // Run this effect when data changes
   return (
     <Fragment>
-      {isPending && <Skeleton count={3} />}
+      {isPending && <Skeleton count={5} />}
       {data && data?.diaries?.length !== 0 ? (
         <div className="mb-14 p-3" ref={divRef}>
           <div className="rounded-xl bg-stone-900 p-3 text-sm text-slate-300">

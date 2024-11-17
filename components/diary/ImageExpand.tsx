@@ -30,7 +30,7 @@ const ImageExpand = ({
                 width={400}
                 height={400}
                 alt="expand-img"
-                className="w-full rounded"
+                className="mt-3 w-full rounded"
               />
             </DialogDescription>
           </DialogHeader>
