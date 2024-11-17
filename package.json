@@ -21,6 +21,7 @@
     "bcryptjs": "^2.4.3",
     "chart.js": "^4.4.3",
     "class-variance-authority": "^0.7.0",
+    "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "jsonwebtoken": "^9.0.2",

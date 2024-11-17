@@ -8,6 +8,8 @@ import { format } from "date-fns";
 import React, { Fragment, useEffect, useRef } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaCaretRight } from "react-icons/fa";
+import Image from "next/image";
+import ImageExpand from "@/components/diary/ImageExpand";
 
 const DiaryPage = () => {
   const divRef = useRef<HTMLDivElement | null>(null);
@@ -49,6 +51,17 @@ const DiaryPage = () => {
                         <FaCaretRight className="mt-1 text-purple-500" />
                       </span>{" "}
                       <p>
+                        {item.secure_url && (
+                          <ImageExpand img={item.secure_url}>
+                            <Image
+                              src={item.secure_url}
+                              width={150}
+                              height={150}
+                              alt="dieryImg"
+                              className="float-start mb-2 mr-2 mt-2 rounded-md"
+                            />
+                          </ImageExpand>
+                        )}
                         <span className="mr-1 text-[0.8rem] text-slate-400">
                           {`(${format(item.createdAt!, "p")})`}
                         </span>

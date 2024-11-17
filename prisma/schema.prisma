@@ -50,11 +50,13 @@ model Diary {
 }
 
 model DayTexts {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  text      String
-  diaryId   String
-  diary     Diary    @relation(fields: [diaryId], references: [id])
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  text       String
+  secure_url String?
+  public_id  String?
+  diaryId    String
+  diary      Diary    @relation(fields: [diaryId], references: [id])
 }
 
 enum Status {

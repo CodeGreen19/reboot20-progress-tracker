@@ -2,7 +2,14 @@
 
 import { db } from "@/lib/db/db";
 import { getUserIdFromCookie } from "../data/data";
-export const createDiary = async ({ text }: { text: string }) => {
+import { uploadImg } from "../data/upload_img";
+export const createDiary = async ({
+  text,
+  imageUrl,
+}: {
+  text: string;
+  imageUrl: string | null;
+}) => {
   try {
     let { id } = await getUserIdFromCookie();
 
@@ -12,6 +19,20 @@ export const createDiary = async ({ text }: { text: string }) => {
     startOfDay.setHours(0, 0, 0, 0);
     const endOfDay = new Date(today);
     endOfDay.setHours(23, 59, 59, 999);
+
+    // upload the image if exist
+    let secure_url: string | null = null;
+    let public_id: string | null = null;
+
+    if (imageUrl) {
+      const ImageUpload = await uploadImg({ readyImgData: imageUrl });
+      if (ImageUpload.secure_url) {
+        secure_url = ImageUpload.secure_url;
+        public_id = ImageUpload.public_id;
+      } else {
+        return { error: ImageUpload.message };
+      }
+    }
 
     let existingDiary = await db.diary.findFirst({
       where: {
@@ -29,6 +50,8 @@ export const createDiary = async ({ text }: { text: string }) => {
         data: {
           text,
           diaryId: existingDiary.id,
+          public_id,
+          secure_url,
         },
       });
     } else {
@@ -37,7 +60,7 @@ export const createDiary = async ({ text }: { text: string }) => {
         data: {
           authorId: id!,
           diaryText: {
-            create: [{ text }],
+            create: [{ text, public_id, secure_url }],
           },
         },
       });

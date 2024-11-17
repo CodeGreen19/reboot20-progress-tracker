@@ -83,3 +83,18 @@
     @apply fixed bottom-0 flex h-16 w-full max-w-xl items-center justify-around rounded-tl-3xl rounded-tr-3xl border-t bg-nav;
   }
 }
+
+/* for my loading animation */
+
+.loader_animation {
+  animation: spinnerLoading 0.7s linear infinite;
+}
+
+@keyframes spinnerLoading {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
