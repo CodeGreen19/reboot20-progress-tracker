@@ -90,3 +90,15 @@ model DayTask {
   TaskId String
   tasks  Tasks   @relation(fields: [TaskId], references: [id])
 }
+
+// namaz
+model Pray {
+  id        String   @id @default(cuid())
+  Fazar     Boolean  @default(false)
+  Jahar     Boolean  @default(false)
+  Ashar     Boolean  @default(false)
+  Magrib    Boolean  @default(false)
+  Esha      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}

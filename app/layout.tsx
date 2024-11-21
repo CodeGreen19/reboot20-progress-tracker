@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "m-auto w-full bg-main font-sand text-stone-100 antialiased",
+          "bg-main font-sand text-stone-100 antialiased",
           fontSand.variable,
         )}
       >

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Button } from "../ui/button";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const ShowDays = ({
   show,
@@ -14,12 +15,12 @@ const ShowDays = ({
       {show ? (
         <Button className="text-blue-500" onClick={() => setShow(!show)}>
           {" "}
-          close all days
+          close all days <ChevronUp className="p-1 text-sm" />
         </Button>
       ) : (
         <Button className="text-blue-500" onClick={() => setShow(!show)}>
           {" "}
-          show all days
+          show all days <ChevronDown className="p-1 text-sm" />
         </Button>
       )}
     </div>

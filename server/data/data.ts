@@ -42,7 +42,7 @@ export const getUserById = async (id: string) => {
   try {
     let user = await db.user.findUnique({
       where: { id },
-      include: { commitments: true },
+      include: { commitments: { orderBy: { id: "desc" } } },
     });
     return user;
   } catch (error) {
@@ -50,7 +50,7 @@ export const getUserById = async (id: string) => {
   }
 };
 
-export const getUserIdFromCookie = async () => {
+export const getUserIdFromCookie = () => {
   let token = cookies().get("user_token")?.value;
 
   if (!token) {

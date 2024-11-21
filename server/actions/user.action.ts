@@ -83,6 +83,16 @@ export const logoutUser = () => {
   cookies().delete("user_token");
 };
 
+export const getUserIdFromCookie = () => {
+  let token = cookies().get("user_token")?.value;
+
+  if (!token) {
+    return { error: "token does'nt exist" };
+  }
+  let decode = jwtDecode(token);
+
+  return { id: decode.id };
+};
 export const getUser = async () => {
   let token = cookies().get("user_token")?.value;
 

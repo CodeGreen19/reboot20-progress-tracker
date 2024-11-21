@@ -18,6 +18,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { addDays } from "@/components/data";
 import { isToDateAboveFromNow } from "../statistics";
+import CustomBtn from "../shared/CustomBtn";
 
 const AddNewTask: React.FC = () => {
   const router = useRouter();
@@ -156,13 +157,14 @@ const AddNewTask: React.FC = () => {
         </div>
       </div>
       <div className="fixed bottom-12 flex w-full max-w-xl justify-center rounded-lg bg-[#0000006b]">
-        <Button
+        <CustomBtn
           onClick={handleSubmit}
-          disabled={isPending}
+          disable={isPending}
+          isPending={isPending}
           className="m-2 mb-8 bg-green-700 hover:bg-green-800"
         >
-          {isPending ? "Creating Goal...." : "Create Goal"}
-        </Button>
+          Create Goal
+        </CustomBtn>
       </div>
     </Fragment>
   );

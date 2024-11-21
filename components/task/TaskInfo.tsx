@@ -8,8 +8,17 @@ import { ShowProgressInPercent, timeLeft } from "../statistics";
 
 const TaskInfo = ({ data }: { data: GoalType }) => {
   const [showDays, setShowDays] = useState<boolean>(false);
-  let { taskCount, setTaskCount } = useTaskStore();
+  let { taskCount, setTaskCount, setExistDayTasks, setDone } = useTaskStore();
 
+  const changeDate = (taskIndex: number) => {
+    setTaskCount(taskIndex);
+    if (data.tasks) {
+      setExistDayTasks(data.tasks[taskIndex]!.dayTasks!);
+    }
+    setDone(false);
+  };
+
+  // it is selecting today
   useEffect(() => {
     let arr = data.tasks?.filter(
       (exist) =>
@@ -18,11 +27,11 @@ const TaskInfo = ({ data }: { data: GoalType }) => {
     );
 
     if (arr?.length! > 0) {
-      let info = data.tasks?.indexOf(arr![0]);
-
-      setTaskCount(info!);
+      let index = data.tasks?.indexOf(arr![0]);
+      setTaskCount(index!);
     }
   }, [data.tasks, setTaskCount]);
+
   return (
     <div className="rounded-xl bg-[#151515] p-2 text-center">
       <p className="mt-3 text-sm text-gray-200">
@@ -45,8 +54,8 @@ const TaskInfo = ({ data }: { data: GoalType }) => {
           {data.tasks!.map((task, i) => (
             <li
               key={i}
-              onClick={() => setTaskCount(i)}
-              className={`flex-none cursor-pointer rounded-3xl bg-[#1d1d1d] p-2 px-4 text-[10px] ${taskCount === i ? "bg-blue-600" : ""}`}
+              onClick={() => changeDate(i)}
+              className={`w-[90px] flex-none cursor-pointer rounded-3xl bg-[#1d1d1d] p-2 px-4 text-[10px] ${taskCount === i ? "bg-blue-600" : ""}`}
             >
               {FormatDate(task.date)}
             </li>

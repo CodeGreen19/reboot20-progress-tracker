@@ -1,11 +1,11 @@
 import HomePage from "@/components/root/HomePage";
 import WelcomePage from "@/components/root/WelcomePage";
-import { authUser } from "@/server/actions/user.action";
+import { getUserIdFromCookie } from "@/server/data/data";
 
-const Home = async () => {
-  let auth = await authUser();
+const Home = () => {
+  let { id } = getUserIdFromCookie();
 
-  return <div>{auth ? <HomePage /> : <WelcomePage />}</div>;
+  return <div>{id ? <HomePage /> : <WelcomePage />}</div>;
 };
 
 export default Home;

@@ -84,7 +84,7 @@ const CompletedTaskCard = ({ goal }: { goal: GoalType }) => {
           {!isGoalDateOver(toDate) ? (
             <Link href={`/${id}`}>
               <Button
-                className="text-green-500 hover:bg-transparent hover:text-green-700"
+                className="rounded-3xl bg-green-500/5 text-green-500 hover:bg-transparent hover:text-green-700"
                 variant={"ghost"}
               >
                 complete task
@@ -106,7 +106,7 @@ const CompletedTaskCard = ({ goal }: { goal: GoalType }) => {
           ) : (
             <Link href={`/analytics/${id}`}>
               <Button
-                className="text-blue-500 hover:bg-transparent hover:text-blue-700"
+                className="rounded-3xl bg-blue-500/5 text-blue-500 hover:bg-transparent hover:text-blue-700"
                 variant={"ghost"}
               >
                 view analytics

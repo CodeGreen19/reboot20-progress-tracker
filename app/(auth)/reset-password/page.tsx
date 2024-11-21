@@ -34,9 +34,7 @@ const ResetPasswordForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p className="mb-4 text-center text-gray-400">
-        Enter your email to get a password reset link in your mailbox
-      </p>
+      <p className="mb-4 text-center text-gray-400">Update your password !</p>
 
       <input
         type="password"

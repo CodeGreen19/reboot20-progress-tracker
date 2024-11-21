@@ -26,7 +26,7 @@ const ProfilePage = () => {
       {isPending && <Skeleton count={2} />}
       {!isPending && data && "id" in data && (
         <div>
-          <ul className="mx-3 mt-2 rounded-xl border bg-[#161616] p-2 shadow-sm">
+          <ul className="mx-3 mt-2 rounded-xl border bg-[#161616] p-2 px-4 shadow-sm">
             <li className="my-2 grid grid-cols-[1.2fr_2fr]">
               <span>Full Name</span>
               <span>: {data.name}</span>
@@ -50,8 +50,8 @@ const ProfilePage = () => {
             </li>
             <li className="my-2 grid grid-cols-[1.2fr_2fr]">
               <span></span>
-              <div
-                className="mr-5 text-red-600"
+              <Button
+                className="my-0 flex w-20 rounded-3xl bg-neutral-800 py-1 text-center text-red-600"
                 onClick={() => {
                   logoutUser();
                   router.push("/");
@@ -59,7 +59,7 @@ const ProfilePage = () => {
                 }}
               >
                 Logout
-              </div>
+              </Button>
             </li>
           </ul>
           <div className="mb-20">

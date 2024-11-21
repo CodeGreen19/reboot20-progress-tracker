@@ -1,15 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { Button } from "../ui/button";
-import { BsCheck, BsCircle } from "react-icons/bs";
+import { BsCheck } from "react-icons/bs";
 
-import { DayTaskType } from "@/server/schema";
-import { isGoalDateOver } from "../statistics";
-import { clientSideErrorShow } from "../data";
 import { useTaskStore } from "@/hooks/useStore";
-import { setDate } from "date-fns";
-import FormatDate from "../shared/FormatDate";
+import { cn } from "@/lib/utils";
+import { DayTaskType } from "@/server/schema";
+import { ListTodo } from "lucide-react";
+import { clientSideErrorShow } from "../data";
 
 const TasksCard = ({
   tasks,
@@ -46,21 +43,23 @@ const TasksCard = ({
       <ul className="p-4">
         {tasks.map((task) => (
           <li
-            className="my-1 flex cursor-pointer items-center justify-between rounded-3xl bg-[#191919] p-3 px-4"
+            className={cn(
+              "group my-1 flex cursor-pointer items-center justify-between rounded-3xl p-3 px-4",
+              task.isDone ? "done bg-black/15" : "undone bg-black/40",
+            )}
             onClick={() => handleUpdate(task.id!)}
             key={task.id}
           >
-            <span
-              className={`text-[12px] sm:text-[1rem] ${task.isDone && "text-gray-500"}`}
-            >
-              {task.title}
-            </span>
+            <div className="flex items-center gap-1">
+              <ListTodo className="p-1 text-yellow-500 group-[.done]:text-gray-500" />
+              <span
+                className={`text-[12px] sm:text-[1rem] ${task.isDone && "text-gray-500"}`}
+              >
+                {task.title}
+              </span>
+            </div>
 
-            {task.isDone ? (
-              <BsCheck className="text-xl text-green-500" />
-            ) : (
-              <BsCircle className="text-xl text-gray-500" />
-            )}
+            <BsCheck className="text-xl text-green-500 group-[.undone]:text-gray-700" />
           </li>
         ))}
       </ul>

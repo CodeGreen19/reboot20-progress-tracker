@@ -1,106 +1,121 @@
 "use client";
 
-import {
-  clientSideErrorShow,
-  clientSideMessageShow,
-  newSave,
-} from "@/components/data";
+import { clientSideErrorShow, clientSideMessageShow } from "@/components/data";
+import CustomBtn from "@/components/shared/CustomBtn";
 import Skeleton from "@/components/shared/Skeleton";
 import TaskInfo from "@/components/task/TaskInfo";
 import TasksCard from "@/components/task/TasksCard";
-import { Button } from "@/components/ui/button";
-import useSingleGoal from "@/hooks/useSingleGoal";
 import { useTaskStore } from "@/hooks/useStore";
-import { updateTaskFromGoal } from "@/server/actions/goal.action";
-import { DayTaskType } from "@/server/schema";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Fragment, useEffect, useState } from "react";
+import {
+  getSingleGoal,
+  updateTaskFromGoal,
+} from "@/server/actions/goal.action";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Fragment } from "react";
 
 const TaskPage = ({ params }: { params: { id: string } }) => {
   const queryClient = useQueryClient();
-  const { data, isPending } = useSingleGoal(params.id);
-  const { taskCount } = useTaskStore();
+  const { taskCount, existDayTasks, setExistDayTasks, done, setDone } =
+    useTaskStore();
 
-  const [existDayTask, setExistDayTask] = useState<DayTaskType[]>([]);
-  const [newDone, setNewDone] = useState<{
-    unsaveChange: number;
-    saveChange: number;
-  }>({ unsaveChange: 0, saveChange: 0 });
+  // query the data
+  const { data, isPending } = useQuery({
+    queryKey: ["singleGoal"],
+    queryFn: async () => {
+      let info = await getSingleGoal(params.id);
+      // update the exist task
+      if (info.singleGoal) {
+        let existDayTaskInfo = info.singleGoal.tasks[taskCount].dayTasks;
+        setExistDayTasks(existDayTaskInfo);
+      }
+
+      return info;
+    },
+  });
 
   // update task
   const { mutate, isPending: updatePending } = useMutation({
     mutationFn: updateTaskFromGoal,
-    onSuccess: ({ error, message }) => {
-      clientSideErrorShow(error);
+    onSuccess: async ({ error, message }) => {
+      if (error) {
+        return clientSideErrorShow(error);
+      }
       if (message) clientSideMessageShow(message);
-      queryClient.invalidateQueries();
+      await queryClient.invalidateQueries({ queryKey: ["singleGoal"] });
     },
   });
 
   const updateTask = (id: string) => {
-    let existTask = [...existDayTask];
-    existDayTask.forEach((task, i) => {
+    let updatedTasks = [...existDayTasks];
+    existDayTasks.forEach((task, i) => {
       if (task.id! === id) {
-        existTask[i] = { ...task, isDone: task.isDone ? false : true };
+        updatedTasks[i] = { ...task, isDone: task.isDone ? false : true };
       }
     });
-    setExistDayTask(existTask);
-  };
-  useEffect(() => {
-    if (data?.singleGoal) {
-      setExistDayTask(data.singleGoal.tasks[taskCount].dayTasks);
-    }
-  }, [data?.singleGoal, taskCount]);
 
-  useEffect(() => {
-    if (data?.singleGoal && existDayTask.length > 0) {
-      let newCompleted = newSave(
-        data?.singleGoal?.tasks[taskCount].dayTasks!,
-        existDayTask,
-        taskCount,
-      );
-      setNewDone(newCompleted);
+    // is changed
+    let count = 0;
+    let updateCount = 0;
+
+    data?.singleGoal?.tasks[taskCount].dayTasks.forEach((element) => {
+      if (element.isDone === false) {
+        count++;
+      }
+    });
+
+    updatedTasks.forEach((element) => {
+      if (element.isDone === false) {
+        updateCount++;
+      }
+    });
+
+    if (count === updateCount) {
+      setDone(false);
+    } else {
+      setDone(true);
     }
-  }, [data?.singleGoal, existDayTask, taskCount]);
+
+    // task updated
+    setExistDayTasks(updatedTasks);
+  };
 
   return (
     <Fragment>
       {isPending ? (
         <Skeleton count={5} />
       ) : (
-        <div className="pb-24">
+        <div className="px-1 pb-24">
           <TaskInfo data={data?.singleGoal!} />
 
-          <h1 className="pt-3 text-center text-lg font-bold">
-            My Tasks {`(${existDayTask.length})`}
+          <h1 className="text-md rounded-lg bg-gradient-to-b from-green-500/10 to-transparent p-3 text-center font-semibold text-green-500">
+            My today&apos;s tasks
           </h1>
           <TasksCard
-            tasks={existDayTask}
+            tasks={existDayTasks}
             update={updateTask}
             firstDate={data?.singleGoal?.fromDate!}
           />
-          <div className="bottom_nav justify-between px-8">
+          <div className="bottom_nav justify-between px-8 text-sm sm:text-base">
             <>
-              <span>
-                New added{" "}
-                <span className="text-green-500">{newDone.unsaveChange}</span>{" "}
-                <span className={`${newDone.saveChange > 0 ? "" : "hidden"}`}>
-                  and Removed{" "}
-                  <span className="text-red-500">{newDone.saveChange}</span>
+              <span className="text-gray-500">
+                Tasks count (
+                <span className="mx-1 text-green-500">
+                  {data?.singleGoal?.tasks[0].dayTasks.length}
                 </span>
+                )
               </span>
-              {newDone.saveChange === 0 && newDone.unsaveChange === 0 ? (
-                ""
-              ) : (
-                <Button
-                  disabled={updatePending}
-                  className="rounded-3xl bg-black"
+              {done && (
+                <CustomBtn
+                  disable={updatePending}
+                  isPending={updatePending}
+                  className="min-w-14 rounded-3xl bg-green-600 py-0 text-xs text-white hover:bg-green-700"
                   onClick={() => {
-                    mutate(existDayTask);
+                    mutate(existDayTasks);
+                    setDone(false);
                   }}
                 >
-                  {updatePending ? "Saving" : "Save"}
-                </Button>
+                  Update
+                </CustomBtn>
               )}
             </>
           </div>

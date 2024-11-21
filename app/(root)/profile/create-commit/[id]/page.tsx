@@ -1,7 +1,7 @@
 "use client";
 
 import { clientSideErrorShow, clientSideMessageShow } from "@/components/data";
-import { Button } from "@/components/ui/button";
+import CustomBtn from "@/components/shared/CustomBtn";
 import { createCommits } from "@/server/actions/commits.action";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -39,9 +39,9 @@ const CrateCommit = ({ params }: { params: { id: string } }) => {
         placeholder="enter commitments here..."
       ></textarea>
       <div className="my-3 flex items-center justify-center">
-        <Button type="submit" disabled={isPending}>
+        <CustomBtn type="submit" isPending={isPending} disable={isPending}>
           Create
-        </Button>
+        </CustomBtn>
       </div>
     </form>
   );

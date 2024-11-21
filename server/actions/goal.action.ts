@@ -64,8 +64,14 @@ export const getGoalsBasedOnUser = async () => {
     }
     const users = await db.user.findUnique({
       where: { id: userInfo.id },
+
       include: {
-        goals: { include: { tasks: { include: { dayTasks: true } } } },
+        goals: {
+          include: {
+            tasks: { include: { dayTasks: true } },
+          },
+          orderBy: { id: "asc" },
+        },
       },
     });
     return { users };
@@ -127,7 +133,11 @@ export const getGoalsWithAllInfoBasedOnUser = async () => {
     const goals = await db.user.findUnique({
       where: { id: userInfo.id },
       include: {
-        goals: { include: { tasks: { include: { dayTasks: true } } } },
+        goals: {
+          include: {
+            tasks: { include: { dayTasks: true }, orderBy: { date: "asc" } },
+          },
+        },
       },
     });
     return { goals };

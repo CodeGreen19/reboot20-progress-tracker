@@ -68,6 +68,8 @@
   }
 }
 
+/* theme  */
+
 @layer base {
   * {
     @apply border-border;
@@ -97,4 +99,8 @@
   100% {
     rotate: 360deg;
   }
+}
+
+.goal-task-show-box::-webkit-scrollbar {
+  display: none;
 }

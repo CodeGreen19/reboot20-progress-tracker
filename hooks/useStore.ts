@@ -1,3 +1,4 @@
+import { DayTaskType } from "@/server/schema";
 import { create } from "zustand";
 
 interface UserState {
@@ -18,13 +19,22 @@ export const useUserStore = create<UserState>((set) => ({
 }));
 
 interface TaskStore {
+  done: boolean;
+  setDone: (val: boolean) => void;
   taskCount: number;
+  existDayTasks: DayTaskType[];
   setTaskCount: (count: number) => void;
+  setExistDayTasks: (item: DayTaskType[]) => void;
   clearTaskCount: () => void;
 }
 
 export const useTaskStore = create<TaskStore>((set) => ({
+  done: false,
+  setDone: (val) => set({ done: val }),
+
   taskCount: 0,
+  existDayTasks: [],
+  setExistDayTasks: (items) => set({ existDayTasks: items }),
   setTaskCount: (count: number) => set({ taskCount: count }),
   clearTaskCount: () => set({ taskCount: 0 }),
 }));

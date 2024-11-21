@@ -89,7 +89,7 @@ const DiaryPage = () => {
             </div>
             <div className="flex w-full items-center justify-center">
               <CreateNewDiary>
-                <div className="mt-4 flex items-center justify-center text-sm text-blue-500 underline hover:bg-transparent hover:text-blue-600">
+                <div className="mt-4 flex items-center justify-center text-sm text-blue-500 hover:bg-transparent hover:text-blue-600">
                   add new in your diary <FaArrowRight className="ml-2" />
                 </div>
               </CreateNewDiary>
