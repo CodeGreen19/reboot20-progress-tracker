@@ -13,7 +13,7 @@ const LogoNav = () => {
   console.log(id);
 
   return (
-    <div className="flex_center sticky left-0 top-0 z-50 h-20 w-full justify-between rounded-bl-3xl rounded-br-3xl border-b bg-nav px-5 md:px-6">
+    <div className="flex_center sticky left-0 top-0 z-50 h-20 w-full justify-between rounded-bl-3xl rounded-br-3xl border-b bg-nav px-3 md:px-6">
       <div className="flex items-end">
         <Link href={"/"}>
           <Image height={40} width={200} alt="logo" src={"/logo.png"} />
@@ -24,14 +24,18 @@ const LogoNav = () => {
           <>
             <StaticGoal>
               <div className="flex items-center gap-2 rounded-3xl bg-black p-1 px-3 text-sm">
-                <GoGoal className="text-yellow-500" />
-                Goals
+                <div className="py-1">
+                  <GoGoal className="text-yellow-500" />
+                </div>
+                <span className="hidden sm:block">Goals</span>
               </div>
             </StaticGoal>
             <PrayStaistics>
               <div className="flex items-center gap-2 rounded-3xl bg-black p-1 px-3 text-sm">
-                <FaPray className="text-green-500" />
-                Pray
+                <div className="py-1">
+                  <FaPray className="text-green-500" />
+                </div>
+                <span className="hidden sm:block">Pray</span>
               </div>
             </PrayStaistics>
           </>

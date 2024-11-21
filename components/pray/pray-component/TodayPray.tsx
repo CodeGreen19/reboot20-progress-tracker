@@ -43,7 +43,7 @@ const TodayPray = () => {
     mutate(name);
   };
   return (
-    <div className="mt-4 rounded-xl bg-neutral-900 p-4">
+    <div className="mt-4 rounded-xl bg-neutral-900 p-2">
       <h1 className="font-bold text-yellow-500"> Today</h1>
       <desc className="mb-2 text-xs text-gray-400">
         Click the prayer that you have done !
@@ -54,10 +54,10 @@ const TodayPray = () => {
             <div
               onClick={() => handleSubmit(item)}
               key={item}
-              className="relative cursor-pointer rounded-md bg-neutral-800 p-4 text-neutral-400 has-[h1]:bg-emerald-500/5 has-[h1]:text-green-500"
+              className="relative cursor-pointer rounded-md bg-neutral-800 p-2 py-4 text-xs text-neutral-400 has-[h1]:bg-emerald-500/5 has-[h1]:text-green-500"
             >
               {item}
-              <div className="absolute right-0 top-1">
+              <div className="absolute right-0 top-0">
                 {(data?.Fazar && item === "Fazar") ||
                 (data?.Jahar && item === "Jahar") ||
                 (data?.Ashar && item === "Ashar") ||
