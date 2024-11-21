@@ -78,7 +78,6 @@ const StaticGoal = ({ children }: { children: ReactNode }) => {
               </div>
             </div>
           </DrawerHeader>
-          <DrawerFooter>this is the foooter</DrawerFooter>
         </DrawerContent>
       </Drawer>
     </div>

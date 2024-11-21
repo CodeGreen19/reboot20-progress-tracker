@@ -58,6 +58,9 @@ export function PrayChart() {
     });
     return info;
   };
+  if (!isPending && data?.length === 0) {
+    return null;
+  }
   return (
     <Fragment>
       {isPending ? (
